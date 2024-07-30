@@ -4,7 +4,15 @@ require('dotenv').config();
 const express = require('express');
 const AWS = require('aws-sdk');
 const app = express();
+const cors = require('cors');
 const port = 3000;
+
+// Allow requests from your frontend domain
+const corsOptions = {
+  origin: 'http://tests3react-ssgdhj.s3-website.us-east-2.amazonaws.com',
+  optionsSuccessStatus: 200
+};
+
 
 // Configure AWS SDK
 AWS.config.update({
@@ -17,7 +25,7 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
 
 
-
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/login', async (req, res) => {
